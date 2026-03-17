@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SparkVSR — Video Comparison</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #555;
+            --border-subtle: #e0e0e0;
+            --accent-blue: #4a6cf7;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* ===== Nav ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            height: 60px;
+        }
+
+        .nav-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-left: 28px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* ===== Page ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 100px 0 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* ===== Comparison Category ===== */
+        .comparison-category {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        /* ===== Clip Tabs ===== */
+        .clip-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-blue);
+            color: #fff;
+            border-color: var(--accent-blue);
+        }
+
+        .clip-content {
+            display: none;
+        }
+
+        .clip-content.active {
+            display: block;
+        }
+
+        /* ===== 2x3 Video Grid ===== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .grid-cell {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-card);
+        }
+
+        .grid-cell video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .grid-cell .cell-label {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 0;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .grid-cell.ours .cell-label {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .grid-cell.ours {
+            border: 2px solid var(--accent-blue);
+        }
+
+        /* ===== Zoom Lens ===== */
+        .zoom-lens {
+            position: absolute;
+            /* Position set dynamically via JS */
+            /* Size gets set dynamically via inline style based on grid's LENS_SIZE */
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 10;
+            pointer-events: none;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            background: #000;
+        }
+
+        .zoom-lens canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== Back link ===== */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            margin-bottom: 60px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">SparkVSR</a>
+            <div class="nav-links">
+                <a href="index.html#abs">Abstract</a>
+                <a href="index.html#method">Method</a>
+                <a href="index.html#results">Results</a>
+                <a href="comparison.html" style="color: var(--accent-blue);">Comparison</a>
+                <a href="index.html#bib">BibTeX</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Video Comparison</h1>
+            <p>Side-by-side comparison of different video super-resolution methods</p>
+            <p
+                style="margin-top: 12px; color: var(--accent-blue); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 9c0-2.2 1.8-4 4-4h6c2.2 0 4 1.8 4 4v6c0 2.2-1.8 4-4 4H9c-2.2 0-4-1.8-4-4V9z" />
+                    <path d="M12 5v14" />
+                    <path d="M5 12h14" />
+                </svg>
+                Hover and move your mouse over any video to explore different zoomed regions
+            </p>
+        </div>
+
+        <!-- ===== YouHQ40 dataset ===== -->
+        <div class="comparison-category">
+            <h2 class="category-title">YouHQ40 dataset</h2>
+            <div class="clip-tabs">
+                <button class="tab-btn active" data-target="youhq-clip1">Clip 1</button>
+                <button class="tab-btn" data-target="youhq-clip2">Clip 2</button>
+            </div>
+
+            <div class="clip-content active" id="youhq-clip1">
+                <div class="video-grid" data-default-x="0.42" data-default-y="0.41" data-zoom="2" data-lens-size="150">
+                    <div class="grid-cell"><video src="videos/comparison/input/YouHQ40/017.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">LR Input</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/STAR/YouHQ40/017.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">STAR</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/DOVE/YouHQ40/017.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">DOVE</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/SeedVR2-7B/YouHQ40/017.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">SeedVR2-7B</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/FlashVSR-Full/YouHQ40/017.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">FlashVSR-Full</div>
+                    </div>
+                    <div class="grid-cell ours"><video src="videos/comparison/ours/YouHQ40/017.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">Ours (SparkVSR)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clip-content" id="youhq-clip2">
+                <div class="video-grid" data-default-x="0.6" data-default-y="0.31" data-zoom="1.5" data-lens-size="150"
+                    data-lens-pos="bottom-left">
+                    <div class="grid-cell"><video src="videos/comparison/input/YouHQ40/025.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">LR Input</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/STAR/YouHQ40/025.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">STAR</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/DOVE/YouHQ40/025.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">DOVE</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/SeedVR2-7B/YouHQ40/025.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">SeedVR2-7B</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/FlashVSR-Full/YouHQ40/025.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">FlashVSR-Full</div>
+                    </div>
+                    <div class="grid-cell ours"><video src="videos/comparison/ours/YouHQ40/025.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">Ours (SparkVSR)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SPMCS dataset ===== -->
+        <div class="comparison-category">
+            <h2 class="category-title">SPMCS dataset</h2>
+            <div class="clip-tabs">
+                <button class="tab-btn active" data-target="spmcs-clip1">Clip 1</button>
+                <button class="tab-btn" data-target="spmcs-clip2">Clip 2</button>
+            </div>
+
+            <div class="clip-content active" id="spmcs-clip1">
+                <div class="video-grid" data-default-x="0.5" data-default-y="0.18" data-zoom="1.7" data-lens-size="150">
+                    <div class="grid-cell"><video src="videos/comparison/input/SPMCS/hitachi_isee5_001.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">LR Input</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/STAR/SPMCS/hitachi_isee5_001.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">STAR</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/DOVE/SPMCS/hitachi_isee5_001.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">DOVE</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/SeedVR2-7B/SPMCS/hitachi_isee5_001.mp4"
+                            autoplay loop muted playsinline></video>
+                        <div class="cell-label">SeedVR2-7B</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/FlashVSR-Full/SPMCS/hitachi_isee5_001.mp4"
+                            autoplay loop muted playsinline></video>
+                        <div class="cell-label">FlashVSR-Full</div>
+                    </div>
+                    <div class="grid-cell ours"><video src="videos/comparison/ours/SPMCS/hitachi_isee5_001.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">Ours (SparkVSR)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clip-content" id="spmcs-clip2">
+                <div class="video-grid" data-default-x="0.6" data-default-y="0.2" data-zoom="2" data-lens-size="150">
+                    <div class="grid-cell"><video src="videos/comparison/input/SPMCS/gree3_001.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">LR Input</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/STAR/SPMCS/gree3_001.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">STAR</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/DOVE/SPMCS/gree3_001.mp4" autoplay loop muted
+                            playsinline></video>
+                        <div class="cell-label">DOVE</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/SeedVR2-7B/SPMCS/gree3_001.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">SeedVR2-7B</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/FlashVSR-Full/SPMCS/gree3_001.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">FlashVSR-Full</div>
+                    </div>
+                    <div class="grid-cell ours"><video src="videos/comparison/ours/SPMCS/gree3_001.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">Ours (SparkVSR)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== MovieLQ dataset ===== -->
+        <div class="comparison-category">
+            <h2 class="category-title">MovieLQ dataset</h2>
+            <div class="clip-tabs">
+                <button class="tab-btn active" data-target="movie-clip1">Clip 1</button>
+                <button class="tab-btn" data-target="movie-clip2">Clip 2</button>
+            </div>
+
+            <div class="clip-content active" id="movie-clip1">
+                <div class="video-grid" data-default-x="0.75" data-default-y="0.4" data-zoom="2.3" data-lens-size="150">
+                    <div class="grid-cell"><video src="videos/comparison/input/MovieLQ/movie1_clip_5.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">LR Input</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/STAR/MovieLQ/movie1_clip_5.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">STAR</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/DOVE/MovieLQ/movie1_clip_5.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">DOVE</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/SeedVR2-7B/MovieLQ/movie1_clip_5.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">SeedVR2-7B</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/FlashVSR-Full/MovieLQ/movie1_clip_5.mp4"
+                            autoplay loop muted playsinline></video>
+                        <div class="cell-label">FlashVSR-Full</div>
+                    </div>
+                    <div class="grid-cell ours"><video src="videos/comparison/ours/MovieLQ/movie1_clip_5.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">Ours (SparkVSR)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clip-content" id="movie-clip2">
+                <div class="video-grid" data-default-x="0.25" data-default-y="0.8" data-zoom="2" data-lens-size="150">
+                    <div class="grid-cell"><video src="videos/comparison/input/MovieLQ/movie1_clip_1.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">LR Input</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/STAR/MovieLQ/movie1_clip_1.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">STAR</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/DOVE/MovieLQ/movie1_clip_1.mp4" autoplay loop
+                            muted playsinline></video>
+                        <div class="cell-label">DOVE</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/SeedVR2-7B/MovieLQ/movie1_clip_1.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">SeedVR2-7B</div>
+                    </div>
+                    <div class="grid-cell"><video src="videos/comparison/FlashVSR-Full/MovieLQ/movie1_clip_1.mp4"
+                            autoplay loop muted playsinline></video>
+                        <div class="cell-label">FlashVSR-Full</div>
+                    </div>
+                    <div class="grid-cell ours"><video src="videos/comparison/ours/MovieLQ/movie1_clip_1.mp4" autoplay
+                            loop muted playsinline></video>
+                        <div class="cell-label">Ours (SparkVSR)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to main page</a>
+    </div>
+
+    <script>
+        // Tab switching logic
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.closest('.comparison-category');
+
+                category.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                category.querySelectorAll('.clip-content').forEach(c => c.classList.remove('active'));
+
+                const targetId = btn.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Zoom lens - synced across all cells in same grid
+        // Global defaults (overridden per-grid via data-zoom and data-lens-size)
+        const DEFAULT_ZOOM = 3;
+        const DEFAULT_LENS_SIZE = 180;
+        const DEFAULT_X = 0.5;
+        const DEFAULT_Y = 0.5;
+
+        document.querySelectorAll('.video-grid').forEach(grid => {
+            const cells = Array.from(grid.querySelectorAll('.grid-cell'));
+            const cellData = [];
+
+            const gridDefaultX = parseFloat(grid.dataset.defaultX) || DEFAULT_X;
+            const gridDefaultY = parseFloat(grid.dataset.defaultY) || DEFAULT_Y;
+            const gridZoom = parseFloat(grid.dataset.zoom) || DEFAULT_ZOOM;
+            const gridLensSize = parseInt(grid.dataset.lensSize) || DEFAULT_LENS_SIZE;
+            const gridLensPos = grid.dataset.lensPos || 'top-left';
+
+            let posX = gridDefaultX;
+            let posY = gridDefaultY;
+
+            cells.forEach(cell => {
+                const video = cell.querySelector('video');
+                if (!video) return;
+
+                const lens = document.createElement('div');
+                lens.className = 'zoom-lens';
+                lens.style.width = gridLensSize + 'px';
+                lens.style.height = gridLensSize + 'px';
+
+                // Set lens position based on grid data attribute
+                if (gridLensPos.includes('bottom')) {
+                    const label = cell.querySelector('.cell-label');
+                    const labelHeight = label ? label.offsetHeight : 0;
+                    lens.style.bottom = (labelHeight + 8) + 'px';
+                } else {
+                    lens.style.top = '8px';
+                }
+
+                if (gridLensPos.includes('right')) {
+                    lens.style.right = '8px';
+                } else {
+                    lens.style.left = '8px';
+                }
+
+                const canvas = document.createElement('canvas');
+                // The canvas itself stays the same pixel resolution as the lens box
+                canvas.width = gridLensSize;
+                canvas.height = gridLensSize;
+                lens.appendChild(canvas);
+                cell.insertBefore(lens, cell.firstChild);
+
+                cellData.push({ video, canvas, ctx: canvas.getContext('2d'), cell });
+            });
+
+            function drawAll() {
+                cellData.forEach(({ video, canvas, ctx }) => {
+                    const vw = video.videoWidth;
+                    const vh = video.videoHeight;
+                    if (!vw || !vh) return;
+
+                    const sx = posX * vw;
+                    const sy = posY * vh;
+                    const rect = video.getBoundingClientRect();
+
+                    // Box size in original video coordinates
+                    const cropW = (gridLensSize / rect.width * vw) / gridZoom;
+                    const cropH = (gridLensSize / rect.height * vh) / gridZoom;
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(video,
+                        sx - cropW / 2, sy - cropH / 2, cropW, cropH,
+                        0, 0, canvas.width, canvas.height
+                    );
+                });
+                requestAnimationFrame(drawAll);
+            }
+            requestAnimationFrame(drawAll);
+
+            cellData.forEach(({ cell, video }) => {
+                cell.addEventListener('mousemove', (e) => {
+                    const rect = video.getBoundingClientRect();
+                    posX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                    posY = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+                });
+                cell.addEventListener('mouseleave', () => {
+                    posX = gridDefaultX;
+                    posY = gridDefaultY;
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
