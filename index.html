@@ -9,7 +9,7 @@
     <!-- =============================================
          TODO: 修改论文标题
          ============================================= -->
-    <title>SparkVSR: Interactive Video Super-Resolution via Sparse Keyframe Propagation</title>
+    <title>SparkVSR</title>
     <link rel="icon" type="image/png" sizes="32x32" href="./logo3.png">
     <link rel="shortcut icon" href="./logo3.png">
 
@@ -297,6 +297,29 @@
             margin-bottom: 28px;
         }
 
+        .footer-logos {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 18px;
+            margin-top: 0;
+        }
+
+        .footer-logos img {
+            display: block;
+            width: auto;
+            opacity: 0.78;
+            filter: saturate(0.9);
+        }
+
+        .footer-logos .logo-tamu {
+            height: 16px;
+        }
+
+        .footer-logos .logo-youtube {
+            height: 18px;
+        }
+
         /* ===== Link Buttons ===== */
         .link-buttons {
             display: flex;
@@ -341,6 +364,142 @@
             margin: 0 auto;
         }
 
+        .hero-teaser {
+            margin-bottom: 28px;
+        }
+
+        .demo-video-wrapper {
+            max-width: 1080px;
+        }
+
+        .demo-showcase {
+            position: relative;
+            padding: 24px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 247, 250, 0.98));
+            border: 1px solid rgba(74, 108, 247, 0.14);
+            box-shadow: 0 20px 48px rgba(74, 108, 247, 0.12);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .demo-showcase::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at top right, rgba(74, 108, 247, 0.16), transparent 34%),
+                radial-gradient(circle at bottom left, rgba(8, 145, 178, 0.1), transparent 32%);
+            pointer-events: none;
+        }
+
+        .demo-showcase-header,
+        .demo-video-shell {
+            position: relative;
+            z-index: 1;
+        }
+
+        .demo-showcase-header {
+            position: relative;
+            min-height: 40px;
+            padding: 0 150px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .demo-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(74, 108, 247, 0.08);
+            color: var(--accent-blue);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .demo-kicker::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.45);
+        }
+
+        .demo-title {
+            margin: 0;
+            font-size: 1.38rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .demo-video-shell {
+            padding: 14px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(74, 108, 247, 0.16), rgba(8, 145, 178, 0.1));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        }
+
+        .demo-video-frame {
+            padding: 10px;
+            border-radius: 16px;
+            background: #0d1322;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 24px rgba(8, 12, 24, 0.24);
+        }
+
+        .demo-window-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 2px 2px 10px;
+        }
+
+        .demo-window-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .demo-window-dot.red {
+            background: #ff5f57;
+        }
+
+        .demo-window-dot.yellow {
+            background: #febc2e;
+        }
+
+        .demo-window-dot.green {
+            background: #28c840;
+        }
+
+        .demo-window-label {
+            margin-left: 6px;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .demo-video {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+            background: #000;
+        }
+
         .teaser-wrapper img {
             width: 100%;
             border-radius: var(--radius-md);
@@ -354,10 +513,6 @@
             line-height: 1.6;
             margin-top: 12px;
             padding: 0 10px;
-        }
-
-        .demo-caption {
-            font-size: 1.08rem;
         }
 
         /* ===== Sections ===== */
@@ -564,7 +719,7 @@
 
         /* ===== BibTeX ===== */
         .bibtex-wrapper {
-            max-width: 750px;
+            max-width: 920px;
             margin: 0 auto;
             position: relative;
         }
@@ -579,7 +734,8 @@
             line-height: 1.7;
             color: var(--text-secondary);
             white-space: pre-wrap;
-            word-break: break-all;
+            word-break: normal;
+            overflow-wrap: anywhere;
             overflow-x: auto;
         }
 
@@ -604,8 +760,13 @@
 
         /* ===== Footer ===== */
         footer {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
             text-align: center;
-            padding: 40px 24px;
+            padding: 24px;
             color: var(--text-muted);
             font-size: 0.8rem;
             border-top: 1px solid var(--border-subtle);
@@ -637,6 +798,54 @@
             .link-buttons a {
                 padding: 8px 16px;
                 font-size: 0.82rem;
+            }
+
+            .footer-logos {
+                justify-content: center;
+                gap: 16px;
+                margin-top: 10px;
+            }
+
+            .footer-logos .logo-tamu {
+                height: 14px;
+            }
+
+            .footer-logos .logo-youtube {
+                height: 16px;
+            }
+
+            footer {
+                display: block;
+                padding: 24px;
+            }
+
+            .demo-showcase {
+                padding: 16px;
+                border-radius: 20px;
+            }
+
+            .demo-showcase-header {
+                min-height: auto;
+                padding: 0;
+                margin-bottom: 14px;
+            }
+
+            .demo-kicker {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+            }
+
+            .demo-title {
+                font-size: 1.18rem;
+            }
+
+            .demo-video-shell {
+                padding: 10px;
+            }
+
+            .demo-video-frame {
+                padding: 8px;
             }
 
             .carousel-track {
@@ -889,20 +1098,44 @@
          如果某个链接还没有，可以给 <a> 添加 class="disabled"
          ============================================= -->
         <div class="link-buttons">
-            <a href="#" id="link-paper"><i class="fa-solid fa-file-lines"></i> Paper</a>
+            <a href="https://arxiv.org/abs/2603.16864" id="link-paper"><i class="fa-solid fa-file-lines"></i> Paper</a>
             <a href="https://github.com/taco-group/SparkVSR" id="link-code"><i class="fa-brands fa-github"></i> Code</a>
-            <a href="#" id="link-model"><i class="fa-solid fa-cube"></i> Model</a>
+            <a href="https://huggingface.co/JiongzeYu/SparkVSR-S2" id="link-model"><i class="fa-solid fa-cube"></i> Model</a>
             <!-- <a href="#" class="disabled"><i class="fa-solid fa-database"></i> Dataset (Coming Soon)</a> -->
+        </div>
+
+        <div class="teaser-wrapper hero-teaser">
+            <img src="inference_pipeline_1.png" alt="SparkVSR Overall Inference Framework">
+            <p class="teaser-caption"><strong>Overall inference framework of SparkVSR.</strong> The pipeline consists
+                of three main stages: (1) Keyframe Selection: LR keyframes are extracted using manual, I-frame, or
+                random sampling strategies; (2) HR Reference Generation: Selected frames are upscaled into HR
+                reference keyframes via an interactive (task/content prompt-guided) or blind ISR model; (3)
+                Conditional Video Reconstruction: A Diffusion Transformer-based VSR model fuses the HR keyframe and LR
+                video latents to guide the generation of the final HR video.</p>
         </div>
 
         <!-- =============================================
          TODO [必填]: 替换为你的 Demo 展示视频
          这是展示你方法整体效果的视频 (如 demo.mp4)
          ============================================= -->
-        <div class="teaser-wrapper">
-            <video src="videos/demo.mp4" controls autoplay loop muted playsinline
-                style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);"></video>
-            <p class="teaser-caption demo-caption" style="text-align: center;"><strong>SparkVSR Video Demonstration</strong></p>
+        <div class="teaser-wrapper demo-video-wrapper">
+            <div class="demo-showcase">
+                <div class="demo-showcase-header">
+                    <span class="demo-kicker">Featured Demo</span>
+                    <h2 class="demo-title">SparkVSR Video Demonstration</h2>
+                </div>
+                <div class="demo-video-shell">
+                    <div class="demo-video-frame">
+                        <div class="demo-window-bar">
+                            <span class="demo-window-dot red"></span>
+                            <span class="demo-window-dot yellow"></span>
+                            <span class="demo-window-dot green"></span>
+                            <span class="demo-window-label">Demo Preview</span>
+                        </div>
+                        <video class="demo-video" src="videos/demo.mp4" controls autoplay loop muted playsinline></video>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -949,24 +1182,6 @@
                 <h2>Method</h2>
             </div>
             <div class="method-content">
-                <!-- =============================================
-                 TODO [必填]: 将 teaser.jpg 放在 web/ 目录下
-                 这是展示你方法效果的概览图（如 Speed-Quality tradeoff 图等）
-                 ============================================= -->
-                <div class="teaser-wrapper" style="margin-bottom: 40px;">
-                    <img src="inference_pipeline_1.png" alt="SparkVSR Teaser">
-                    <p class="teaser-caption"><strong>Overall inference framework of SparkVSR.</strong> The pipeline
-                        consists of
-                        three
-                        main stages: (1) Keyframe Selection: LR keyframes are extracted using manual, I-frame, or random
-                        sampling strategies; (2) HR Reference Generation: Selected frames are upscaled into HR reference
-                        keyframes via an interactive (task/content prompt-guided) or blind ISR model; (3) Conditional
-                        Video
-                        Reconstruction: A Diffusion Transformer-based VSR model fuses the HR keyframe and LR video
-                        latents to
-                        guide the generation of the final HR video.</p>
-                </div>
-
                 <!-- =============================================
                  TODO [必填]: 将 flowchart.jpg (方法流程图/pipeline图)
                  放在 web/ 目录下
@@ -1340,14 +1555,15 @@
                 <button class="copy-btn" onclick="copyBibtex()">
                     <i class="fa-regular fa-clipboard"></i> Copy
                 </button>
-                <!-- =============================================
-                 TODO [必填]: 替换为你的 BibTeX 引用
-                 ============================================= -->
-                <pre class="bibtex-code" id="bibtex-content">@article{sparkvsr2025,
-  title={SparkVSR: Your Paper Title Here},
-  author={Author One and Author Two and Author Three and Author Four and Author Five},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
-  year={2025}
+
+                <pre class="bibtex-code" id="bibtex-content">@misc{yu2026sparkvsrinteractivevideosuperresolution,
+      title={SparkVSR: Interactive Video Super-Resolution via Sparse Keyframe Propagation}, 
+      author={Jiongze Yu and Xiangbo Gao and Pooja Verlani and Akshay Gadde and Yilin Wang and Balu Adsumilli and Zhengzhong Tu},
+      year={2026},
+      eprint={2603.16864},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2603.16864}, 
 }</pre>
             </div>
         </div>
@@ -1356,8 +1572,11 @@
     <!-- ===== Footer ===== -->
 
     <footer>
-        <p>SparkVSR Project Page · Template inspired by <a href="https://zhuang2002.github.io/FlashVSR/"
-                target="_blank">FlashVSR</a></p>
+        <p>SparkVSR Project Page</p>
+        <div class="footer-logos" aria-label="Affiliated organizations">
+            <img class="logo-tamu" src="TAMU_logo.png" alt="Texas A&amp;M University">
+            <img class="logo-youtube" src="YouTube_logo_1.png" alt="YouTube">
+        </div>
     </footer>
 
 
