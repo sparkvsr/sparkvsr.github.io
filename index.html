@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SparkVSR: Project Page for Video Super-Resolution">
 
-    <!-- =============================================
-         TODO: 修改论文标题
-         ============================================= -->
     <title>SparkVSR</title>
     <link rel="icon" type="image/png" sizes="32x32" href="./logo3.png">
     <link rel="shortcut icon" href="./logo3.png">
@@ -351,11 +348,6 @@
             border-color: rgba(255, 255, 255, 0.12);
             transform: translateY(-2px);
             box-shadow: var(--shadow-glow);
-        }
-
-        .link-buttons a.disabled {
-            opacity: 0.5;
-            pointer-events: none;
         }
 
         /* ===== Teaser Image ===== */
@@ -1063,7 +1055,6 @@
             <div class="nav-links">
                 <a href="#abs">Abstract</a>
                 <a href="#method">Method</a>
-                <!-- TODO: 如需要可添加/修改导航项 -->
                 <a href="#results">Results</a>
                 <a href="comparison.html">Comparison</a>
                 <a href="#bib">BibTeX</a>
@@ -1073,12 +1064,7 @@
 
     <!-- ===== Hero Section ===== -->
     <div class="hero">
-        <!-- =============================================
-         TODO [可选]: 将你的项目 logo 放在 web/ 目录下，
-         取消注释下面这行：
-        <!-- Logo + SparkVSR 左右排版 -->
         <div class="brand-row">
-            <!-- <img src="logo4.png" alt="SparkVSR Logo" class="hero-logo"> -->
             <div class="brand-text">
                 <span class="brand-spark">Spark</span><span class="brand-vsr">VSR</span>
             </div>
@@ -1101,15 +1087,10 @@
             <br><span style="font-size:0.8rem;">† Corresponding author</span>
         </p>
 
-        <!-- =============================================
-         TODO [必填]: 替换为你的论文/代码/模型链接
-         如果某个链接还没有，可以给 <a> 添加 class="disabled"
-         ============================================= -->
         <div class="link-buttons">
             <a href="https://arxiv.org/abs/2603.16864" id="link-paper"><i class="fa-solid fa-file-lines"></i> Paper</a>
             <a href="https://github.com/taco-group/SparkVSR" id="link-code"><i class="fa-brands fa-github"></i> Code</a>
             <a href="https://huggingface.co/JiongzeYu/SparkVSR" id="link-model"><i class="fa-solid fa-cube"></i> Model</a>
-            <!-- <a href="#" class="disabled"><i class="fa-solid fa-database"></i> Dataset (Coming Soon)</a> -->
         </div>
 
         <div class="teaser-wrapper hero-teaser">
@@ -1122,10 +1103,6 @@
                 video latents to guide the generation of the final HR video.</p>
         </div>
 
-        <!-- =============================================
-         TODO [必填]: 替换为你的 Demo 展示视频
-         这是展示你方法整体效果的视频 (如 demo.mp4)
-         ============================================= -->
         <div class="teaser-wrapper demo-video-wrapper">
             <div class="demo-showcase">
                 <div class="demo-showcase-header">
@@ -1153,9 +1130,6 @@
             <div class="section-header">
                 <h2>Abstract</h2>
             </div>
-            <!-- =============================================
-             TODO [必填]: 替换为你的论文摘要全文
-             ============================================= -->
             <div class="abstract-text">
                 Video Super-Resolution (VSR) aims to restore high-quality video frames from low-resolution (LR)
                 estimates, yet most existing VSR approaches behave like black boxes at inference time: users cannot
@@ -1190,16 +1164,8 @@
                 <h2>Method</h2>
             </div>
             <div class="method-content">
-                <!-- =============================================
-                 TODO [必填]: 将 flowchart.jpg (方法流程图/pipeline图)
-                 放在 web/ 目录下
-                 ============================================= -->
                 <img src="training_pipeline_1.png" alt="SparkVSR Pipeline">
 
-                <!-- =============================================
-                 TODO [必填]: 简要描述你的方法（概述 + 各模块说明）
-                 可以添加多个 <h3> + <p> 来分段描述
-                 ============================================= -->
                 <p>
                     <strong>Keyframe-conditioned two-stage training pipeline of SparkVSR.</strong> (1) Stage 1 (Latent
                     Space Training): Augmented HR keyframe latents are concatenated with LR video latents to optimize
